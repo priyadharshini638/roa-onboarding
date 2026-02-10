@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInterceptor = axios.create({
-  baseURL: "https://api-fwdslash-staging.cyces.co",
+  baseURL: import.meta.env.VITE_API_URL || "https://api-fwdslash-staging.cyces.co",
   headers: {
     "Content-Type": "application/json",
   },
