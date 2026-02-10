@@ -1,0 +1,9 @@
+export const USER_PAGE_URL = `/users`;
+export const TEAM_PAGE_URL = `/teams`;
+export const CHATBOT_PAGE_URL = `/chatbots`;
+export const TEAM_DETAIL_PAGE_URL = `/teams/detail/:teamName/:tab?`;
+export const CHATBOT_DETAIL_PAGE_URL = `/chatbots/detail/:agentName/:teamName/:tab?/`;
+export const USER_DETAIL_PAGE_URL = `/users/detail/:userId/:tab?`;
+export const USER_DETAIL_FORM_PAGE_URL = `/user/:userId/`;
+export const LOGIN_PAGE_URL = `/login`;
+export const USER_MULTI_STEP_FORM_PAGE_URL = `/user/multi-step-form`;
