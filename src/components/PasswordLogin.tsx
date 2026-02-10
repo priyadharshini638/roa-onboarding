@@ -6,6 +6,7 @@ import { authStore } from "../store/authStore";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { loginSchema, type LoginFormValues } from "../schema/loginschema";
+import { loginFields } from "../api/loginFields";
 
 export default function PasswordLogin() {
   const login = authStore((s) => s.login);
@@ -41,55 +42,41 @@ export default function PasswordLogin() {
     <>
       <div className="flex flex-col gap-2">
         <div className="text-[#1a202c] font-bold text-3xl">Welcome Back!</div>
-        <div className="text-[#535862]"></div>
-        Sign in to continue your onboarding process.
+        <div className="text-[#535862]">
+          Sign in to continue your onboarding process.
+        </div>
       </div>
+
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
-        <div className="flex flex-col gap-1.5 mb-5">
-          <label className="text-[#414651] text-sm font-medium">
-            Email <span className="text-[rgb(219,18,100)]">*</span>
-          </label>
+        {loginFields.map((field) => (
+          <div key={field.name} className="flex flex-col gap-1.5 mb-5">
+            <label className="text-[#414651] text-sm font-medium">
+              {field.label}
+              {field.required && (
+                <span className="text-[rgb(219,18,100)]"> *</span>
+              )}
+            </label>
 
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                type="email"
-                placeholder="Enter your Email"
-                className="text-base rounded-lg shadow-[0px_1px_2px_0px_rgba(10,13,18,0.05)]"
-              />
+            <Controller
+              name={field.name}
+              control={control}
+              render={({ field: controllerField }) => (
+                <Input
+                  {...controllerField}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  className="text-base rounded-lg shadow-[0px_1px_2px_0px_rgba(10,13,18,0.05)]"
+                />
+              )}
+            />
+
+            {errors[field.name] && (
+              <p className="text-red-500 text-sm">
+                {errors[field.name]?.message}
+              </p>
             )}
-          />
-
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1.5 mb-5">
-          <label className="text-[#414651] text-sm font-medium">
-            Password <span className="text-[rgb(219,18,100)]">*</span>
-          </label>
-
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                type="password"
-                placeholder="Enter your password"
-                className="text-base rounded-lg shadow-[0px_1px_2px_0px_rgba(10,13,18,0.05)]"
-              />
-            )}
-          />
-
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
-        </div>
+          </div>
+        ))}
 
         <Button type="submit" className="w-full bg-[rgb(16,41,90)] rounded-lg">
           Get started
